@@ -123,6 +123,8 @@ class userAccount
             // Gender validate
              if(empty($SGender)){
                 userAccount::$gndr['SGender'] = "Enter your gender."; 
+             }elseif(!in_array($SGender, userAccount::$gndr)){
+                  userAccount::$gndr['SGender'] = "Do't think it weak that you have given your hand.";
              } else{
               $correctSGender =dataBaseInput::$connection->real_escape_string($SGender);
              }
@@ -139,10 +141,6 @@ class userAccount
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>';
                }else{
-               //    userAccount::$success['insert'] = '<div class="alert alert-success alert-dismissible fade show mt-2" role="alert">
-               //      <strong>Congratulations!</strong> Register successfull.
-               //      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-               //  </div>'; 
                
                //  sing up and kicked into the index.php page
                 $_SESSION['all users'] = ["First_Name" => $correctSfistName , "Surname" => $correctSsurName , "email_or_mobile"=> $correctSemail_Phn , "password" => $correctSpass , "Birth_day" => $correctSbirth_day, "Birth_month" => $correctSbirth_month , "Birth_year" => $correctSbirth_year, "gender" => $correctSGender];
@@ -203,28 +201,108 @@ class userAccount
             userAccount::$errorImg ="Please upload an image.";
            }elseif(!getimagesize($tempName)){
             userAccount::$errorImg = "Invalid image format. Please upload an image file.";
-           }
-           else{
-           $a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-           $ext = substr((basename($userFileName)), -4);
-           
-           (!is_dir("./Images/All_Users/$userEmail"))? mkdir("./Images/All_Users/$userEmail") : null;
-           $uniqeName = uniqid() . rand(100000, 999999) . substr(str_shuffle($a), 0, 8) . date("himdYasfl") . $ext;
-           $destination = "./Images/All_Users/$userEmail/$uniqeName";
-           $move =  move_uploaded_file($tempName, $destination);
-           if(!$move){
-            userAccount::$errorImg = "Images uploaded failed.";
            }else{
-                  $imgUpdateQuery = "UPDATE `all users` SET `img` = '$destination' WHERE `email_or_mobile` = '$userEmail'";
-                  $imgUpdate = dataBaseInput::$connection->query($imgUpdateQuery);
-                  if(!$imgUpdate){
-                     userAccount::$errorImg  = "something went wrong";
-                  }else{
-            $_SESSION['all users']['img'] = $destination;
-            userAccount::$successImg = "Image upload successfully.";
+               $selectPreUserDataQuery = "SELECT * FROM `all users` WHERE `email_or_mobile` = '$userEmail'";
+               $selectPreUserData = dataBaseInput::$connection->query($selectPreUserDataQuery);
+               if($selectPreUserData->num_rows != 1){
+                  userAccount::$errorImg = "User Data not found!";
+               }else{
+                  $selectPreUser = $selectPreUserData->fetch_object();
+                  if($selectPreUser->img != null){
+                     unlink($selectPreUser->img);
                   }
-           }
+                  $a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                  $ext = substr((basename($userFileName)), -3);
+                  
+                  (!is_dir("./Images/All_Users/$userEmail"))? mkdir("./Images/All_Users/$userEmail") : null;
+                  $uniqeName = uniqid() . rand(100000, 999999) . substr(str_shuffle($a), 0, 8) . date("himdYasfl") . "." . $ext;
+                  $destination = "./Images/All_Users/$userEmail/$uniqeName";
+                  $move =  move_uploaded_file($tempName, $destination);
+                  if(!$move){
+                   userAccount::$errorImg = "Images uploaded failed.";
+                  }else{
+                         $imgUpdateQuery = "UPDATE `all users` SET `img` = '$destination' WHERE `email_or_mobile` = '$userEmail'";
+                         $imgUpdate = dataBaseInput::$connection->query($imgUpdateQuery);
+                         if(!$imgUpdate){
+                            userAccount::$errorImg  = "something went wrong";
+                         }else{
+                            $_SESSION['all users']['img'] = $destination;
+                            userAccount::$successImg = "Image upload successfully.";
+                         }
+                  }
+               }
          }
+      }
+      return "";
+   }
+
+   public static function updateInformation(): string
+   {
+      if(($_SERVER['REQUEST_METHOD']) === "POST" && isset($_POST['update123'])){
+            userAccount::$SfistName = $SfistName =userAccount::sefuda($_POST['SfistName']); 
+            userAccount::$SsurName = $SsurName =userAccount::sefuda($_POST['SsurName']); 
+            userAccount::$Semail_Phn = $Semail_Phn =userAccount::sefuda($_POST['Semail_Phn']); 
+            userAccount::$SGender = $SGender =userAccount::sefuda($_POST['SGender'] ?? null); 
+
+            // First Name validate
+             if(empty($SfistName)){
+                userAccount::$error['SfistName'] = "Enter your First Name."; 
+             }elseif(!preg_match("/^[a-zA-Z]*$/",$SfistName)){
+                    userAccount::$error['SfistName']= "Invalid name.";
+             }else{
+              $correctSfistName =dataBaseInput::$connection->real_escape_string($SfistName);
+             }
+             
+            // Sur Name validate
+             if(empty($SsurName)){
+                userAccount::$error['SsurName'] = "Enter your Surname."; 
+             }elseif(!preg_match("/^[a-zA-Z]*$/",$SsurName)){
+                    userAccount::$error['SsurName']= "Invalid name.";
+             }else{
+              $correctSsurName =dataBaseInput::$connection->real_escape_string($SsurName);
+             }
+
+            // email validate
+             if(empty($Semail_Phn)){
+                userAccount::$error['Semail_Phn'] = "Enter your email address."; 
+             }elseif(!filter_var("$Semail_Phn , FILTER_VALIDATE_EMAIL")){
+                    userAccount::$error['Semail_Phn']= "Invalid email addresss.";
+             }else{
+               if($_SESSION['all users']['email_or_mobile'] != $Semail_Phn){
+               $select_pre_Semail_Phn_query = "SELECT * FROM `all users` WHERE `email_or_mobile` = '$Semail_Phn'";
+               $select_pre_Semail_Phn =dataBaseInput::$connection->query($select_pre_Semail_Phn_query);
+               if($select_pre_Semail_Phn->num_rows > 0){
+                   userAccount::$error['Semail_Phn']= "Email address already exist.";
+               }else{
+                   $correctSemail_Phn =dataBaseInput::$connection->real_escape_string($Semail_Phn);
+               }
+               }else{
+                   $correctSemail_Phn =dataBaseInput::$connection->real_escape_string($Semail_Phn);
+               }
+             }
+
+             // Gender validate
+             if(empty($SGender)){
+                userAccount::$gndr['SGender'] = "Enter your gender."; 
+             } elseif(!in_array($SGender, userAccount::$gndr)){
+                  userAccount::$gndr['SGender'] = "Do't think it weak that you have given your hand.";
+             } else{
+                  $correctSGender =dataBaseInput::$connection->real_escape_string($SGender);
+             }
+
+             if(isset($correctSfistName) && isset($correctSsurName) && isset($correctSemail_Phn) && isset($correctSGender)){
+               $Semail_Phn = $_SESSION['all users']['email_or_mobile'];
+               $updateUserInfoQuery = "UPDATE `all users` SET `First_Name`= '$correctSfistName',`Surname`='$correctSsurName',`email_or_mobile`='$correctSemail_Phn',`gender`='$correctSGender' WHERE `email_or_mobile` = '$Semail_Phn'";
+               $updateUserInfo = dataBaseInput::$connection->query($updateUserInfoQuery);
+               if(!$updateUserInfo){
+                    userAccount::$error['updateUserInfo'] = '<div class="alert alert-danger alert-dismissible fade show mt-2" role="alert"> <strong>Something went wrong!</strong> Sign up again with your details. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+               }else{
+                   userAccount::$success['updateUserInfo'] = '<div class="alert alert-success alert-dismissible fade show mt-2" role="alert"> <strong>Congratulations!</strong> Information Update Successfully. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+
+                    $userImg = $_SESSION['all users']['img'];
+                    $_SESSION['all users'] = ["First_Name" => $correctSfistName , "Surname" => $correctSsurName , "email_or_mobile"=> $correctSemail_Phn , "gender" => $correctSGender, "img" => $userImg]; 
+               }
+             }
       }
       return "";
    }

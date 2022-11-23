@@ -11,7 +11,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 }
 ?>
 
-<div class="container-fluid p-0">
+<div class="container-fluid p-0 mb-5">
     <!-- X Button div -->
     <div class="text-end" style="border-bottom: 1px solid #ddd; height: 50px;">
         <div class="my-auto align-middle pt-2">
@@ -72,22 +72,31 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- forget link -->
                         <div class="text-center">
-                            <a href="javascript:void(0)" class="text-center" style="font-size: 12px;">
+                            <a href="javascript:void(0)" class="text-center" style="font-size: 12px;"
+                                onclick="btn3ClickHandler()">
                                 <span>Forgotten password?</span>
                             </a>
+                            <script>
+                            function btn3ClickHandler() {
+                                alert("Comming Soon. Working on it!");
+                            }
+                            </script>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
+        <div class=" col-1">
+            <div class="vr" style="height: 100%;">
+            </div>
+        </div>
 
-        <!-- (sing-Up) form -->
+        <!-- start main (sing-Up) form -->
         <div class="col-5">
             <div class="col-12 p-0">
                 <h3 class="m-0">Sign Up</h3>
                 <span class="fw-lighter" style="font-size: 14px;">It's quick and easy.</span>
             </div>
-            <div></div>
             <div>
                 <?=userAccount::$error['insert'] ?? null?>
             </div>
