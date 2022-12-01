@@ -24,6 +24,11 @@ class userAccount
     public static string $errorImg;
     public static string $successImg;
 
+   //  change password 
+   public static string $Opass;
+   public static string $Npass;
+   public static string $NCpass;
+
     
     protected function __construct()
     {
@@ -37,7 +42,8 @@ class userAccount
         $data =stripcslashes($data);
         return $data;
     }
-    
+
+   //  validation login & sign in and serverside work 
     public static function validation(): bool
     {
         if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['singup123'])){
@@ -181,8 +187,7 @@ class userAccount
                $correctgender = $uInfo->gender;
                $img = $uInfo->img;
                $role = $uInfo->role;
-               
-                  $_SESSION['all users'] = ["img" => $img, "role" => $role, "First_Name" => $correctFirstName , "Surname" => $correctSurName ,    "email_or_mobile"=> $correctSemail, "gender" => $correctgender];
+                  $_SESSION['all users'] = [ "img" => $img, "role" => $role, "First_Name" => $correctFirstName , "Surname" => $correctSurName ,    "email_or_mobile"=> $correctSemail, "gender" => $correctgender];
                }   
                return true;
             }
@@ -190,6 +195,7 @@ class userAccount
       return true;
    }  
 
+   // update profile picture validation and serverside work
    public static function updateProfile(): string
    {
       if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])){
@@ -211,12 +217,13 @@ class userAccount
                   if($selectPreUser->img != null){
                      unlink($selectPreUser->img);
                   }
+                  $userId = $selectPreUser->ID;
                   $a = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-                  $ext = substr((basename($userFileName)), -3);
+                  $ext = pathinfo($userFileName, PATHINFO_EXTENSION);
                   
-                  (!is_dir("./Images/All_Users/$userEmail"))? mkdir("./Images/All_Users/$userEmail") : null;
+                  (!is_dir("./Images/All_Users/$userId"))? mkdir("./Images/All_Users/$userId") : null;
                   $uniqeName = uniqid() . rand(100000, 999999) . substr(str_shuffle($a), 0, 8) . date("himdYasfl") . "." . $ext;
-                  $destination = "./Images/All_Users/$userEmail/$uniqeName";
+                  $destination = "./Images/All_Users/$userId/$uniqeName";
                   $move =  move_uploaded_file($tempName, $destination);
                   if(!$move){
                    userAccount::$errorImg = "Images uploaded failed.";
@@ -236,6 +243,7 @@ class userAccount
       return "";
    }
 
+   // update info validation and severside work
    public static function updateInformation(): string
    {
       if(($_SERVER['REQUEST_METHOD']) === "POST" && isset($_POST['update123'])){
@@ -290,20 +298,97 @@ class userAccount
                   $correctSGender =dataBaseInput::$connection->real_escape_string($SGender);
              }
 
-             if(isset($correctSfistName) && isset($correctSsurName) && isset($correctSemail_Phn) && isset($correctSGender)){
+             if(isset($correctSfistName)  && isset($correctSsurName) && isset($correctSemail_Phn) && isset($correctSGender)){
                $Semail_Phn = $_SESSION['all users']['email_or_mobile'];
                $updateUserInfoQuery = "UPDATE `all users` SET `First_Name`= '$correctSfistName',`Surname`='$correctSsurName',`email_or_mobile`='$correctSemail_Phn',`gender`='$correctSGender' WHERE `email_or_mobile` = '$Semail_Phn'";
                $updateUserInfo = dataBaseInput::$connection->query($updateUserInfoQuery);
                if(!$updateUserInfo){
                     userAccount::$error['updateUserInfo'] = '<div class="alert alert-danger alert-dismissible fade show mt-2" role="alert"> <strong>Something went wrong!</strong> Sign up again with your details. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-               }else{
-                   userAccount::$success['updateUserInfo'] = '<div class="alert alert-success alert-dismissible fade show mt-2" role="alert"> <strong>Congratulations!</strong> Information Update Successfully. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+               }else{echo"<script>
+toastr.success('Password update Successfully.');
+setTimeout(() => {
+    location.href = './updateProfile.php';
+}, 1000);
+</script>";
 
                     $userImg = $_SESSION['all users']['img'];
                     $_SESSION['all users'] = ["First_Name" => $correctSfistName , "Surname" => $correctSsurName , "email_or_mobile"=> $correctSemail_Phn , "gender" => $correctSGender, "img" => $userImg]; 
                }
              }
       }
+      return "";
+   }
+
+   // change password validation and severside work
+   public static function changePass():string{
+       if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['cngPass123'])){
+         userAccount::$Opass = $Opass = userAccount::sefuda( $_POST['Opass']);
+         userAccount::$Npass = $Npass = userAccount::sefuda($_POST['Npass']);
+         userAccount::$NCpass = $NCpass = userAccount::sefuda($_POST['NCpass']);
+         
+            // old password validate
+             if(empty($Opass)){
+                userAccount::$error['Opass'] = "Enter your password."; 
+             }else{
+               $userEmail = $_SESSION['all users']['email_or_mobile'];
+               $checkOpassQuery = "SELECT * FROM `all users` WHERE `email_or_mobile` = '$userEmail'";
+               $checkOpass = dataBaseInput::$connection->query($checkOpassQuery);
+               $checkOpassData = $checkOpass->fetch_object();
+               $realOldPass = $checkOpassData->password;
+               
+               if(md5($Opass) === $realOldPass){  
+                   $correctOpass =dataBaseInput::$connection->real_escape_string($Opass);
+               }else{
+                   userAccount::$error['Opass'] = "Old password did't matched!";
+               }
+             }
+             
+            // new password validate
+             if(empty($Npass)){
+                userAccount::$error['Npass'] = "Enter your password."; 
+             }elseif(!preg_match('/^(?=.*\d)(?=.*[a-z]).{8,}$/', $Npass)){ 
+                    userAccount::$error['Npass']= "Invalid password.";
+             }else{
+               if(md5($Npass) === md5($Opass)){
+                  userAccount::$error['Npass']= "Enter a new password.";
+               }else{
+                  $correctNpass =dataBaseInput::$connection->real_escape_string($Npass);
+               }
+             }
+             
+            // Confirm pass validate
+             if(empty($NCpass)){
+                userAccount::$error['NCpass'] = "Enter your password again."; 
+             }elseif($Npass !== $NCpass){
+                    userAccount::$error['NCpass']= "Password did't match.";
+             }else{
+              $correctNCpass =dataBaseInput::$connection->real_escape_string($NCpass);
+             }
+
+            //  update password in database 
+            if(isset($correctOpass) && isset($correctNpass) && isset($correctNCpass)){
+               $convertPass = md5($correctNCpass);
+               $updatepassQuery = "UPDATE `all users` SET `password`='$convertPass' WHERE `email_or_mobile` = '$userEmail';";
+               $updatepass = dataBaseInput::$connection->query($updatepassQuery);
+               if($updatepass){
+                 userAccount::$Opass = userAccount::$Npass =userAccount::$NCpass = "";
+                 $_SESSION['all users'];
+               echo"<script>
+toastr.success('Password update Successfully.');
+setTimeout(() => {
+    location.href = './changePass.php';
+}, 2000);
+</script>";
+               }else{
+                  echo"<script>
+toastr.success('Something went wrong!');
+setTimeout(() => {
+    location.href = './changePass.php';
+}, 2000);
+</script>";
+               }
+            }   
+       }
       return "";
    }
  }

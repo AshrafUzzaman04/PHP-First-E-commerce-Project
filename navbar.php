@@ -73,6 +73,14 @@
                         About</a>
                 </li>
                 <li class="nav-item my-auto">
+                    <a class="nav-link" href="./">
+                        <ion-icon name="pricetag" style=" font-size: 14px; vertical-align:
+                        middle;">
+                        </ion-icon>
+                        Products
+                    </a>
+                </li>
+                <li class="nav-item my-auto">
                     <a class="nav-link" href="./"><i class="fa-solid fa-comment"
                             style=" font-size: 13px; vertical-align: baseline;"></i>
                         Contact</a>
@@ -112,7 +120,7 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="updateProfile.php"><i class="fa-solid fa-wrench"></i>
                                 Update Profile</a></li>
-                        <li><a class="dropdown-item" href="./"><i class="fa-solid fa-key"></i> Change
+                        <li><a class="dropdown-item" href="changePass.php"><i class="fa-solid fa-key"></i> Change
                                 password</a></li>
                         <li>
                             <hr class="dropdown-divider">

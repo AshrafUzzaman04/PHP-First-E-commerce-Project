@@ -74,11 +74,11 @@ include_once("./navbar.php");
                     <div class="text-danger">
                         <?= userAccount::$error['updateUserInfo'] ?? null ?>
                     </div>
-                    <div class="text-success mt-2">
+                    <div class="text-success">
                         <?= userAccount::$success['updateUserInfo'] ?? null ?>
                     </div>
                 </div>
-                <div class="p-0 mb-3">
+                <div class="p-0 mb-1">
                     <hr style="border-top:2px solid #157347;">
                 </div>
                 <form action="" method="POST" class="row">
@@ -86,7 +86,7 @@ include_once("./navbar.php");
                     <!-- First name -->
                     <div class="col-6 ps-0 mb-3">
                         <input type="text" placeholder="First Name" name="SfistName"
-                            class=" form-control form-control-sm <?= isset(userAccount::$error['SfistName'])? "is-invalid" : null ?> <?= isset(userAccount::$SfistName)?"is-valid": null ?>"
+                            class=" form-control form-control-sm <?= isset(userAccount::$error['SfistName'])? "is-invalid" : null ?>"
                             value="<?= userAccount::$SfistName ?? $_SESSION['all users']['First_Name'] ?? null ?>">
                         <div class=" text-danger">
                             <?= userAccount::$error['SfistName'] ?? null ?>
@@ -96,8 +96,7 @@ include_once("./navbar.php");
                     <!-- Surname -->
                     <div class=" col-6 pe-0 mb-3">
                         <input type="text" placeholder="Surname" name="SsurName" class=" form-control form-control-sm
-                                     <?= isset(userAccount::$error['SsurName'])? "is-invalid": null ?>
-                                     <?= isset(userAccount::$SsurName)?"is-valid": null ?>"
+                                     <?= isset(userAccount::$error['SsurName'])? "is-invalid": null ?>"
                             value="<?= userAccount::$SsurName ?? $_SESSION['all users']['Surname'] ?? null ?>">
                         <div class=" text-danger">
                             <?= userAccount::$error['SsurName'] ?? null ?>
@@ -107,7 +106,7 @@ include_once("./navbar.php");
                     <!-- email -->
                     <div class=" col-12 p-0 mb-3">
                         <input type="email" name="Semail_Phn" placeholder="Email address"
-                            class="form-control form-control-sm <?= isset(userAccount::$error['Semail_Phn'])? "is-invalid" : null ?> <?= isset(userAccount::$Semail_Phn)?"is-valid": null ?>"
+                            class="form-control form-control-sm <?= isset(userAccount::$error['Semail_Phn'])? "is-invalid" : null ?>"
                             value="<?= userAccount::$Semail_Phn ?? $_SESSION['all users']['email_or_mobile'] ?? null ?>">
                         <div class="text-danger">
                             <?= userAccount::$error['Semail_Phn'] ?? null ?>
