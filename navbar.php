@@ -40,9 +40,9 @@
                             Update Profile</a></li>
                     <li><a class="dropdown-item" href="./"><i class="fa-solid fa-key"></i> Change
                             password</a></li>
-                    <li>
+                    <lif>
                         <hr class="dropdown-divider">
-                    </li>
+                    </lif>
                     <li><a class="dropdown-item" href="./logOut.php"><i class="fa-solid fa-right-from-bracket"></i>
                             Log Out</a>
                     </li>
@@ -120,8 +120,17 @@
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="updateProfile.php"><i class="fa-solid fa-wrench"></i>
                                 Update Profile</a></li>
-                        <li><a class="dropdown-item" href="changePass.php"><i class="fa-solid fa-key"></i> Change
-                                password</a></li>
+                        <li>
+                            <a class="dropdown-item" href="changePass.php">
+                                <i class="fa-solid fa-key"></i> Change
+                                password
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="admin/index.php">
+                                <i class="fa-solid fa-user"></i> Admin pannel
+                            </a>
+                        </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
