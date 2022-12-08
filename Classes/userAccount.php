@@ -195,7 +195,7 @@ class userAccount
       return true;
    }  
 
-   // update profile picture validation and serverside work
+   // update user profile picture validation and serverside work
    public static function updateProfile(): string
    {
       if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['email'])){
@@ -243,7 +243,7 @@ class userAccount
       return "";
    }
 
-   // update info validation and severside work
+   // update user info validation and severside work
    public static function updateInformation(): string
    {
       if(($_SERVER['REQUEST_METHOD']) === "POST" && isset($_POST['update123'])){

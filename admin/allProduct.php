@@ -13,7 +13,12 @@ include_once("header.php");
         </div>
 
         <!-- all product list here -->
-        <div class="col-10">
+        <div class="col-10 p-0">
+
+            <!-- include navbar -->
+            <?php
+            include_once("./navbar.php");
+?>
             <div class="text-dark mx-auto text-center">
                 <h2>All Product</h2>
             </div>

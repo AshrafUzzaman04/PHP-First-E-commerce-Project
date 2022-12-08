@@ -47,10 +47,10 @@ include_once("./navbar.php");
                         style="font-size: 26px;">
                     </ion-icon>
                 </a> -->
+                <div class="text-danger text-end">
+                    <?= userAccount::$errorImg ?? null ?>
+                </div>
             </form>
-            <div class="text-danger">
-                <?= userAccount::$errorImg ?? null ?>
-            </div>
             <script>
             if (<?php
                 $imgUpdate 
@@ -137,7 +137,10 @@ include_once("./navbar.php");
                                 <?=  $_SESSION['all users']['gender'] === "Others" ? "checked": null  ?>>
                         </label>
                     </div>
+
+                    <!-- submit button -->
                     <div class="p-0">
+                        <input type="reset" class="col-2 mx-auto btn btn-sm btn-dark fw-bold shadow-sm my-3">
                         <input type="submit" name="update123" value="Update"
                             class="col-3 mx-auto btn btn-sm btn-success fw-bold shadow-sm my-3">
                     </div>

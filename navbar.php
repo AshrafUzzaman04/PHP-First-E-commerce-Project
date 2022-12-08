@@ -1,3 +1,4 @@
+<?php include_once("./Classes/userAccount.php") ?>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid iconDiv">
         <a class="navbar-brand" href="./">
@@ -40,9 +41,9 @@
                             Update Profile</a></li>
                     <li><a class="dropdown-item" href="./"><i class="fa-solid fa-key"></i> Change
                             password</a></li>
-                    <lif>
+                    <li>
                         <hr class="dropdown-divider">
-                    </lif>
+                    </li>
                     <li><a class="dropdown-item" href="./logOut.php"><i class="fa-solid fa-right-from-bracket"></i>
                             Log Out</a>
                     </li>
@@ -126,11 +127,15 @@
                                 password
                             </a>
                         </li>
+
+                        <!-- only admin can see the admin pannel excess -->
+                        <?php if($_SESSION['all users']['role'] == "admin") { ?>
                         <li>
                             <a class="dropdown-item" href="admin/index.php">
                                 <i class="fa-solid fa-user"></i> Admin pannel
                             </a>
                         </li>
+                        <?php }?>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
