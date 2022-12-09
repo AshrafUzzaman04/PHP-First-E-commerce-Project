@@ -1,19 +1,40 @@
 <?php 
 include_once("header.php");
+include_once("../Classes/dataBaseInput.php");
 
 if(isset($_POST['subPro123'])){
-     $imgP = $_POST['imgP'] ?? null;
-     $pName = $_POST['pName'];
-     $RealPP = $_POST['RealPP'];
-     $disPP = $_POST['disPP'];
-     $PDesciption = $_POST['PDesciption'];
+    $pName = $_POST['pName'];
+    $RealPP = $_POST['RealPP'];
+    $disPP = $_POST['disPP'];
+    $PDesciption = $_POST['PDesciption'];
+    $imgPName = $_FILES['imgP']['name'];
+    $imgPTmp = $_FILES['imgP']['tmp_name'];
 
-    //  validation the product images
-    if(empty($imgP)){
+    if(!getimagesize($imgPTmp)){
+        $errorimgP = "Invalid image file."; 
+    }elseif(empty($imgPName)){
         $errorimgP = "Select an image file.";
     }else{
-        $corrimgP = $imgP;
+        $ext = pathinfo($imgPName, PATHINFO_EXTENSION);
+        $randomName =  substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"),2,8) . uniqid() . rand(1000, 9999) . date("HmsaMFdYyl");
+        is_dir("../images/products") && mkdir("../images/products") . "." . $ext;
+        $destination = "../images/products/$randomName";
+        $move =  move_uploaded_file($imgPTmp, $destination);
+
+        if(!$move){
+            $errorimgP = "File uploaded failed";
+        }else{
+            dataBaseInput::$connection->query();
+        }
     }
+
+
+    // //  validation the product images
+    // if(empty($imgP)){
+    //     $errorimgP = "Select an image file.";
+    // }else{
+    //     $corrimgP = $imgP;
+    // }
 
     //  validation product name 
      if(empty($pName)){
@@ -79,7 +100,7 @@ if(isset($_POST['subPro123'])){
                             <div class="my-2">
                                 <input type="file" name="imgP"
                                     class="form-control form-control-sm <?= $errorimgP ? "is-invalid" : null ?>"
-                                    value="<?= $imgP; ?>">
+                                    value="<?= $imgP ?? null ?>">
                                 <div class="text-danger text-start">
                                     <span><?= $errorimgP ?? null ?></span>
                                 </div>

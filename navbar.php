@@ -129,13 +129,13 @@
                         </li>
 
                         <!-- only admin can see the admin pannel excess -->
-                        <?php if($_SESSION['all users']['role'] == "admin") { ?>
+                        <?php if(($_SESSION['all users']['role']) == "admin") { ?>
                         <li>
                             <a class="dropdown-item" href="admin/index.php">
                                 <i class="fa-solid fa-user"></i> Admin pannel
                             </a>
                         </li>
-                        <?php }?>
+                        <?php } ?>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -144,7 +144,7 @@
                         </li>
                     </ul>
                 </li>
-                <?php }?>
+                <?php } ?>
             </ul>
 
             <!-- search bar -->

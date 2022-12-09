@@ -2,6 +2,7 @@
 session_start();
 ($_SESSION['all users']['role']) !== "admin" && header("location: .././");
 include_once("../Classes/userAccount.php");
+include_once("../Classes/dataBaseInput.php");
 $pageName = basename($_SERVER['PHP_SELF']);
 ?>
 
