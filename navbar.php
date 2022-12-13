@@ -1,4 +1,8 @@
-<?php include_once("./Classes/userAccount.php") ?>
+<?php
+include_once("./header.php");
+include_once("./Classes/userAccount.php");
+include_once("./Classes/dataBaseInput.php");
+?>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid iconDiv">
         <a class="navbar-brand" href="./">
@@ -129,13 +133,14 @@
                         </li>
 
                         <!-- only admin can see the admin pannel excess -->
-                        <?php if(($_SESSION['all users']['role']) == "admin") { ?>
+                        <?php
+                        if($_SESSION['all users']['role'] == "admin") { ?>
                         <li>
-                            <a class="dropdown-item" href="admin/index.php">
+                            <a class="dropdown-item" href="./admin/index.php">
                                 <i class="fa-solid fa-user"></i> Admin pannel
                             </a>
                         </li>
-                        <?php } ?>
+                        <?php }?>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -159,3 +164,5 @@
         </div>
     </div>
 </nav>
+
+<?php include_once("./footer.php") ?>

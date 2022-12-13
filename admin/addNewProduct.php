@@ -16,8 +16,8 @@ if(isset($_POST['subPro123'])){
         $errorimgP = "Select an image file.";
     }else{
         $ext = pathinfo($imgPName, PATHINFO_EXTENSION);
-        $randomName =  substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"),2,8) . uniqid() . rand(1000, 9999) . date("HmsaMFdYyl");
-        is_dir("../images/products") && mkdir("../images/products") . "." . $ext;
+        $randomName =  substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"),2,8) . uniqid() . rand(1000, 9999) . date("HmsaMFdYyl"). "." . $ext;
+        !is_dir("../images/products") && mkdir("../images/products");
         $destination = "../images/products/$randomName";
         $move =  move_uploaded_file($imgPTmp, $destination);
 

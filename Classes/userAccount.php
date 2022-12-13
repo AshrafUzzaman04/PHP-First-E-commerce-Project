@@ -372,7 +372,6 @@ setTimeout(() => {
                $updatepass = dataBaseInput::$connection->query($updatepassQuery);
                if($updatepass){
                  userAccount::$Opass = userAccount::$Npass =userAccount::$NCpass = "";
-                 $_SESSION['all users'];
                echo"<script>
 toastr.success('Password update Successfully.');
 setTimeout(() => {
