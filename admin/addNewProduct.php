@@ -59,6 +59,7 @@ include_once("header.php");
                 $corrPDesciption = $PDesciption;
             }
         
+            // insert the product details >>>>>>>>>>>>>>>
             if(isset($corrpName) && isset($corrRealPP) && isset($corrdisPP) && isset($corrPDesciption) && isset($imgPath)){
                 
                 $insertProductQuery = "INSERT INTO `products`(`name`, `prize`, `discount_prize`, `description`, `img`) VALUES ('$corrpName', '$corrRealPP', '$corrdisPP', '$corrPDesciption', '$imgPath')";
