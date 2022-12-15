@@ -10,7 +10,6 @@
 
                 <!-- navbar profile picture -->
                 <?php if(isset($_SESSION['all users'])){
-                    include_once("../Classes/dataBaseInput.php");
                     $Semail_Phn = $_SESSION['all users']['email_or_mobile'];
                     $check_user_img_query = "SELECT * FROM `all users` WHERE `email_or_mobile` = '$Semail_Phn'";
                     $check_user_img = dataBaseInput::$connection->query($check_user_img_query);
@@ -20,7 +19,6 @@
                     <a class="nav-link" href="" role="button" data-bs-toggle="dropdown" aria-expanded="true">
                         <img src="
                         <?php
-                        include_once("../Classes/userAccount.php");
                          if((empty($_SESSION['all users']['img']))){
                             if(($_SESSION['all users']['gender']) === "Male"){
                                echo '../Images/image-empty-male.png';

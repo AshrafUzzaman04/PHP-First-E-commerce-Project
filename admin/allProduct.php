@@ -1,5 +1,7 @@
 <?php 
 include_once("header.php");
+
+
 ?>
 
 <div class="container-fluid">
@@ -21,6 +23,16 @@ include_once("header.php");
 ?>
             <div class="text-dark mx-auto text-center">
                 <h2>All Product</h2>
+                <table>
+                    <tr>
+                        <td>Serial NO.</td>
+                        <td>Name</td>
+                        <td>Regular Prize</td>
+                        <td>Discount Prize</td>
+                        <td>Product Image</td>
+                        <td>Action</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

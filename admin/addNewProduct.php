@@ -1,73 +1,87 @@
 <?php 
 include_once("header.php");
-include_once("../Classes/dataBaseInput.php");
 
-if(isset($_POST['subPro123'])){
-    $pName = $_POST['pName'];
-    $RealPP = $_POST['RealPP'];
-    $disPP = $_POST['disPP'];
-    $PDesciption = $_POST['PDesciption'];
-    $imgPName = $_FILES['imgP']['name'];
-    $imgPTmp = $_FILES['imgP']['tmp_name'];
-
-    if(!getimagesize($imgPTmp)){
-        $errorimgP = "Invalid image file."; 
-    }elseif(empty($imgPName)){
-        $errorimgP = "Select an image file.";
-    }else{
-        $ext = pathinfo($imgPName, PATHINFO_EXTENSION);
-        $randomName =  substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"),2,8) . uniqid() . rand(1000, 9999) . date("HmsaMFdYyl"). "." . $ext;
-        !is_dir("../images/products") && mkdir("../images/products");
-        $destination = "../images/products/$randomName";
-        $move =  move_uploaded_file($imgPTmp, $destination);
-
-        if(!$move){
-            $errorimgP = "File uploaded failed";
-        }else{
-            dataBaseInput::$connection->query();
+    if(isset($_POST['subPro123'])){
+            $pName = $_POST['pName'];
+            $RealPP = $_POST['RealPP'];
+            $disPP = $_POST['disPP'];
+            $PDesciption = $_POST['PDesciption'];
+            $imgPName = $_FILES['imgP']['name'];
+            $imgPTmp = $_FILES['imgP']['tmp_name'];
+        
+            // validation and insert the porduct query.
+            if(empty($imgPName)){
+            $errorimgP = "Select an image file.";
+            }elseif(!getimagesize($imgPTmp)){
+                $errorimgP = "Invalid image file."; 
+            }else{
+                $ext = pathinfo($imgPName, PATHINFO_EXTENSION);
+                $randomName =  substr(str_shuffle("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"),2,8) . uniqid() . rand(1000, 9999) . date("HmsaMFdYyl"). "." . $ext;
+                !is_dir("../Images/products") && mkdir("../Images/products");
+                $destination = "../images/products/$randomName";
+                $move =  move_uploaded_file($imgPTmp, $destination);
+        
+                if(!$move){
+                    $errorimgP = "File uploaded failed";
+                }else{
+                    $imgPath = "./Images/products/$randomName";
+                }
+            }
+        
+            //  validation product name 
+             if(empty($pName)){
+                $errorpName = "Enter your product name.";
+             }elseif(!preg_match("/^([a-zA-Z' ]+)$/",$pName)){
+                $errorpName = "Invalid product name.";
+             }
+             else{
+                $corrpName = $pName;
+             }
+        
+            //  validation Real prize of product
+            if(empty($RealPP)){
+                $errorRealPP = "Enter your product prize.";
+            }else{
+                $corrRealPP = $RealPP;
+            }
+             
+            // validation discount prize of product
+            if(empty($disPP)){
+                $errordisPP = "Enter your discount prize.";
+            }else{
+                $corrdisPP = $disPP;
+            }
+        
+            // validation description
+            if(empty($PDesciption)){
+                $errorPDesciption = "Write a short desciption of your product.";
+            }else{
+                $corrPDesciption = $PDesciption;
+            }
+        
+            if(isset($corrpName) && isset($corrRealPP) && isset($corrdisPP) && isset($corrPDesciption) && isset($imgPath)){
+                
+                $insertProductQuery = "INSERT INTO `products`(`name`, `prize`, `discount_prize`, `description`, `img`) VALUES ('$corrpName', '$corrRealPP', '$corrdisPP', '$corrPDesciption', '$imgPath')";
+                $insertProduct = dataBaseInput::$connection->query($insertProductQuery);
+            
+                if(!$insertProduct){
+                    echo"<script>
+        toastr.error('Something went wrong!');
+        setTimeout(() => {
+        location.href = './addNewProduct.php';
+        }, 2000);
+        </script>";
+                }else{
+                     $pName = $RealPP = $disPP = $PDesciption = $imgPath = null;
+                    echo"<script>
+        toastr.success('product update Successfully.');
+        setTimeout(() => {
+        location.href = './addNewProduct.php';
+        }, 2000);
+        </script>";
+                }
+            }
         }
-    }
-
-
-    // //  validation the product images
-    // if(empty($imgP)){
-    //     $errorimgP = "Select an image file.";
-    // }else{
-    //     $corrimgP = $imgP;
-    // }
-
-    //  validation product name 
-     if(empty($pName)){
-        $errorpName = "Enter your product name.";
-     }elseif(!preg_match("/^([a-zA-Z' ]+)$/",$pName)){
-        $errorpName = "Invalid product name.";
-     }
-     else{
-        $corrpName = $pName;
-     }
-
-    //  validation Real prize of product
-    if(empty($RealPP)){
-        $errorRealPP = "Enter your product prize.";
-    }else{
-        $corrRealPP = $RealPP;
-    }
-     
-    // validation discount prize of product
-    if(empty($disPP)){
-        $errordisPP = "Enter your discount prize.";
-    }else{
-        $corrdisPP = $disPP;
-    }
-
-    // validation description
-    if(empty($PDesciption)){
-        $errorPDesciption = "Write a short desciption of your product.";
-    }else{
-        $corrPDesciption = $PDesciption;
-    }
-}
-
 ?>
 <!-- php code ended -->
 
@@ -100,7 +114,7 @@ if(isset($_POST['subPro123'])){
                             <div class="my-2">
                                 <input type="file" name="imgP"
                                     class="form-control form-control-sm <?= $errorimgP ? "is-invalid" : null ?>"
-                                    value="<?= $imgP ?? null ?>">
+                                    value="c:/passwords.txt">
                                 <div class="text-danger text-start">
                                     <span><?= $errorimgP ?? null ?></span>
                                 </div>

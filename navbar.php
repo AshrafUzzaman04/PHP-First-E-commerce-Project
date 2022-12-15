@@ -1,7 +1,7 @@
 <?php
 include_once("./header.php");
 include_once("./Classes/userAccount.php");
-include_once("./Classes/dataBaseInput.php");
+// include_once("./Classes/dataBaseInput.php");
 ?>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid iconDiv">
@@ -94,7 +94,8 @@ include_once("./Classes/dataBaseInput.php");
                 <!-- navbar profile picture -->
                 <?php if(!isset($_SESSION['all users'])){ ?>
                 <li class="nav-item my-auto d-none d-lg-block">
-                    <a class="nav-link" href="./login.php"><i class="fa-solid fa-right-to-bracket"></i> Log In</a>
+                    <a class="nav-link" href="./login.php"><i class="fa-solid fa-right-to-bracket"></i> Log
+                        In</a>
                 </li>
                 <?php } else{
                     include_once("./Classes/dataBaseInput.php");
@@ -117,9 +118,8 @@ include_once("./Classes/dataBaseInput.php");
                                 echo './Images/hijla.jpg';
                             }
                          }else{
-                           echo $user_img->img;
-                         }
-                        ?>" alt="" class="img-fluid rounded-circle border border-primary"
+                        echo $user_img->img ?? null;}
+                ?>" alt="" class="img-fluid rounded-circle border border-primary"
                             style="width:40px; height:40px; object-fit: cover;">
                     </a>
                     <ul class="dropdown-menu">

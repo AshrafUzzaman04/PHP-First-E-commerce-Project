@@ -210,10 +210,12 @@ class userAccount
            }else{
                $selectPreUserDataQuery = "SELECT * FROM `all users` WHERE `email_or_mobile` = '$userEmail'";
                $selectPreUserData = dataBaseInput::$connection->query($selectPreUserDataQuery);
+               
                if($selectPreUserData->num_rows != 1){
                   userAccount::$errorImg = "User Data not found!";
                }else{
                   $selectPreUser = $selectPreUserData->fetch_object();
+                  
                   if($selectPreUser->img != null){
                      unlink($selectPreUser->img);
                   }
@@ -304,13 +306,13 @@ class userAccount
                $updateUserInfo = dataBaseInput::$connection->query($updateUserInfoQuery);
                if(!$updateUserInfo){
                     userAccount::$error['updateUserInfo'] = '<div class="alert alert-danger alert-dismissible fade show mt-2" role="alert"> <strong>Something went wrong!</strong> Sign up again with your details. <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
-               }else{echo"<script>
+               }else{
+                  echo"<script>
 toastr.success('Password update Successfully.');
 setTimeout(() => {
     location.href = './updateProfile.php';
 }, 1000);
 </script>";
-
                     $userImg = $_SESSION['all users']['img'];
                     $_SESSION['all users'] = ["First_Name" => $correctSfistName , "Surname" => $correctSsurName , "email_or_mobile"=> $correctSemail_Phn , "gender" => $correctSGender, "img" => $userImg]; 
                }
@@ -370,8 +372,9 @@ setTimeout(() => {
                $convertPass = md5($correctNCpass);
                $updatepassQuery = "UPDATE `all users` SET `password`='$convertPass' WHERE `email_or_mobile` = '$userEmail';";
                $updatepass = dataBaseInput::$connection->query($updatepassQuery);
+               
                if($updatepass){
-                 userAccount::$Opass = userAccount::$Npass =userAccount::$NCpass = "";
+               userAccount::$Opass = userAccount::$Npass =userAccount::$NCpass = "";
                echo"<script>
 toastr.success('Password update Successfully.');
 setTimeout(() => {
@@ -380,7 +383,7 @@ setTimeout(() => {
 </script>";
                }else{
                   echo"<script>
-toastr.success('Something went wrong!');
+toastr.error('Something went wrong!');
 setTimeout(() => {
     location.href = './changePass.php';
 }, 2000);
