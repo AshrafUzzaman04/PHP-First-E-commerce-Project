@@ -25,7 +25,21 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
 ?>
             <div class="text-dark mx-auto text-center col-xxl-10">
                 <h2 class="my-3">All Product</h2>
-                <?php if($getProductRead->num_rows >= 0 || $getProductRead):?> <table class="table table-hover">
+                <?php
+                if ($getProductRead->num_rows >= 0 || $getProductRead):
+
+                    // paigination php coding >>>>>>>> !important
+                    !isset($_GET['pageNo']) && header("location: $pageName?pageNo=1");
+                    $pageNo = $_GET['pageNo'];
+                    $totalProduct = $getProductRead->num_rows;
+                    $productPerPage = 5;
+                    $totalPage = ceil($totalProduct / $productPerPage);
+                    $startPoint = ($pageNo -1) * $productPerPage;
+                    $getProductReadQuery = "SELECT * FROM `products` LIMIT $startPoint, $productPerPage";
+                    $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
+                    
+                    ?>
+                <table class="table table-hover">
                     <tr class="table-info">
                         <th>Serial NO.</th>
                         <th>Name</th>
@@ -36,7 +50,7 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
                         <th>Action</th>
                     </tr>
                     <?php
-                    $serialNo = 1;
+                    $serialNo = $startPoint +1;
                     while ($data = $getProductRead->fetch_object()) : 
                     
                     ?>
@@ -76,14 +90,14 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
                          endwhile ?>
                 </table>
 
-                <!-- paigination section -->
+                <!-- paigination section for product per page.-->
                 <nav>
                     <ul class="pagination pagination-sm">
-                        <li class="page-item active" aria-current="page">
-                            <span class="page-link">1</span>
+                        <?php for ($i=1; $i <= $totalPage ; $i++): ?>
+                        <li class="page-item" aria-current="page" style="cursor: pointer;">
+                            <a class="page-link" href="<?= "$pageName?pageNo=$i" ?>"><?= $i ?></a>
                         </li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <?php endfor ?>
                     </ul>
                 </nav>
                 <?php endif ?>
