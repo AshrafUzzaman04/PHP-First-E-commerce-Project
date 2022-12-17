@@ -18,7 +18,7 @@
                 </li>
                 <li>
                     <a class="dropdown-item border-bottom <?= $pageName == "allProduct.php" ? "active" : null ?>"
-                        href="./allProduct.php">All Product</a>
+                        href="./allProduct.php?pageNo=1">All Product</a>
                 </li>
                 <li>
                     <a class="dropdown-item <?=  $pageName == "addNewProduct.php" ? "active" : null ?>"

@@ -314,7 +314,8 @@ setTimeout(() => {
 }, 1000);
 </script>";
                     $userImg = $_SESSION['all users']['img'];
-                    $_SESSION['all users'] = ["First_Name" => $correctSfistName , "Surname" => $correctSsurName , "email_or_mobile"=> $correctSemail_Phn , "gender" => $correctSGender, "img" => $userImg]; 
+                    $role = $_SESSION['all users']['role'];
+                    $_SESSION['all users'] = ["role"=>$role, "First_Name" => $correctSfistName , "Surname" => $correctSsurName , "email_or_mobile"=> $correctSemail_Phn , "gender" => $correctSGender, "img" => $userImg]; 
                }
              }
       }

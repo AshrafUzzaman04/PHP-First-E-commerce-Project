@@ -28,7 +28,7 @@
                                 echo '../Images/hijla.jpg';
                             }
                          }else{
-                           echo ".". $user_img->img;
+                           echo "." . $user_img->img;
                          }
                         ?>" alt="" class="img-fluid rounded-circle border border-primary"
                             style="width:40px; height:40px; object-fit: cover;">

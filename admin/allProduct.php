@@ -26,11 +26,11 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
             <div class="text-dark mx-auto text-center col-xxl-10">
                 <h2 class="my-3">All Product</h2>
                 <?php
-                if ($getProductRead->num_rows >= 0 || $getProductRead):
+                if ($getProductRead->num_rows > 0 || $getProductRead):
 
-                    // paigination php coding >>>>>>>> !important
-                    !isset($_GET['pageNo']) && header("location: $pageName?pageNo=1");
-                    $pageNo = $_GET['pageNo'];
+                    // // paigination php coding >>>>>>>> !important
+                    !isset($_GET['pageNo']) && header("location: ./$pageName?pageNo=1");
+                    $pageNo = ($_GET['pageNo']);
                     $totalProduct = $getProductRead->num_rows;
                     $productPerPage = 5;
                     $totalPage = ceil($totalProduct / $productPerPage);
@@ -93,8 +93,9 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
                 <!-- paigination section for product per page.-->
                 <nav>
                     <ul class="pagination pagination-sm">
-                        <?php for ($i=1; $i <= $totalPage ; $i++): ?>
-                        <li class="page-item" aria-current="page" style="cursor: pointer;">
+                        <?php for ($i= 1; $i <= $totalPage ; $i++): ?>
+                        <li class="page-item <?= $i == $pageNo ? "active" :  null  ?>" aria-current="page"
+                            style="cursor: pointer;">
                             <a class="page-link" href="<?= "$pageName?pageNo=$i" ?>"><?= $i ?></a>
                         </li>
                         <?php endfor ?>

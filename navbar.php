@@ -132,7 +132,7 @@ include_once("./Classes/userAccount.php");
                             </a>
                         </li>
 
-                        <!-- only admin can see the admin pannel excess -->
+                        <!-- Only admin will get access to admin panel.  -->
                         <?php
                         if($_SESSION['all users']['role'] == "admin") { ?>
                         <li>
