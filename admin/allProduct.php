@@ -23,13 +23,13 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
             <?php
             include_once("./navbar.php");
 ?>
-            <div class="text-dark mx-auto text-center col-xxl-10">
+            <div class="text-dark mx-auto text-center col-xxl-11">
                 <h2 class="my-3">All Product</h2>
                 <?php
                 if ($getProductRead->num_rows > 0 || $getProductRead):
 
                     // // paigination php coding >>>>>>>> !important
-                    !isset($_GET['pageNo']) && header("location: ./$pageName?pageNo=1");
+                    !isset($_GET['pageNo']) && header('location: ./$pageName?pageNo=1');
                     $pageNo = ($_GET['pageNo']);
                     $totalProduct = $getProductRead->num_rows;
                     $productPerPage = 5;
@@ -41,13 +41,14 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
                     ?>
                 <table class="table table-hover">
                     <tr class="table-info">
-                        <th>Serial NO.</th>
-                        <th>Name</th>
-                        <th>Regular Prize</th>
-                        <th>Discount Prize</th>
-                        <th>Description</th>
-                        <th>Product Image</th>
-                        <th>Action</th>
+                        <th scope="col" class="align-middle">Serial NO.</th>
+                        <th scope="col" class="align-middle">Identificaiton No.</th>
+                        <th scope="col" class="align-middle">Name</th>
+                        <th scope="col" class="align-middle">Regular Prize</th>
+                        <th scope="col" class="align-middle">Discount Prize</th>
+                        <th scope="col" class="align-middle">Description</th>
+                        <th scope="col" class="align-middle">Product Image</th>
+                        <th scope="col" class="align-middle">Action</th>
                     </tr>
                     <?php
                     $serialNo = $startPoint +1;
@@ -58,14 +59,19 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
                         <td class="align-middle">
                             <?= $serialNo ?>
                         </td>
+                        <td class="align-middle"><?= $data->id ?></td>
                         <td class="align-middle"><?= $data->name ?></td>
                         <td class="align-middle"><?= $data->prize ?></td>
                         <td class="align-middle"><?= $data->discount_prize ?></td>
                         <td class="align-middle"><?= $data->description ?></td>
-                        <td class="align-middle"><img src="<?= "." . $data->img ?>" class="img-fluid" alt="" height="80"
-                                width="80"></td>
+                        <td class="align-middle"><img src="<?= "." . $data->img ?>" style="img-fluid" height="80"
+                                width="80">
+                        </td>
+
+                        <!-- action button(edit,delete) given below -->
                         <td class="align-middle">
-                            <a href="" class="btn btn-dark">
+                            <a href="./edit.php?edit=<?= $data->id ?>" data-tooltip="Tooltip help here!"
+                                data-flow="right" class="btn btn-dark">
                                 <svg width="20" height="20" class="d-flex justify-content-center align-items-center"
                                     fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +79,7 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
                                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                 </svg>
                             </a>
-                            <a href="" class="btn btn-danger">
+                            <a href="./delete.php?id=<?= $data->id ?>" class="btn btn-danger mt-2 mt-xxl-0">
                                 <svg width="20" height="20" class="d-flex justify-content-center align-items-center"
                                     fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -91,11 +97,10 @@ $getProductRead = dataBaseInput::$connection->query($getProductReadQuery);
                 </table>
 
                 <!-- paigination section for product per page.-->
-                <nav>
-                    <ul class="pagination pagination-sm">
+                <nav class="d-flex justify-content-center">
+                    <ul class="pagination pagination-md">
                         <?php for ($i= 1; $i <= $totalPage ; $i++): ?>
-                        <li class="page-item <?= $i == $pageNo ? "active" :  null  ?>" aria-current="page"
-                            style="cursor: pointer;">
+                        <li class="page-item <?= $i == $pageNo ? "active" :  null  ?>" aria-current="page">
                             <a class="page-link" href="<?= "$pageName?pageNo=$i" ?>"><?= $i ?></a>
                         </li>
                         <?php endfor ?>

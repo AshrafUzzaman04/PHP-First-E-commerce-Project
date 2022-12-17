@@ -3,7 +3,7 @@ include_once("./header.php");
 include_once("./Classes/userAccount.php");
 // include_once("./Classes/dataBaseInput.php");
 ?>
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-white">
     <div class="container-fluid iconDiv">
         <a class="navbar-brand" href="./">
             <img src="./images/webLogo.png" width="50px" alt="icon">
