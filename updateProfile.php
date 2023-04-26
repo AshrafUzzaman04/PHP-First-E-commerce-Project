@@ -5,10 +5,10 @@ userAccount::updateInformation();
 include_once("./Classes/userAccount.php");
 
 if (!isset($_SESSION['all users'])) {  ?>
-<script>
-location.href = "./";
-</script>
-<?php } 
+    <script>
+        location.href = "./";
+    </script>
+<?php }
 include_once("./navbar.php");
 ?>
 
@@ -19,24 +19,22 @@ include_once("./navbar.php");
         <div class="col-5 pe-3">
             <form action="" method="post" enctype="multipart/form-data" id="imgUploadForm">
                 <input type="hidden" name="email" value="<?= $_SESSION['all users']['email_or_mobile'] ?>">
-                <label for="ppimg" class="text-center imagePP"
-                    style="align-items: flex-end; display: flex; justify-content: end; flex-direction: column;">
+                <label for="ppimg" class="text-center imagePP" style="align-items: flex-end; display: flex; justify-content: end; flex-direction: column;">
 
-                    <img src="<?php 
-                    include_once("./Classes/userAccount.php");
-                    if(empty($_SESSION['all users']['img'])) {
-                            if(($_SESSION['all users']['gender']) === "Male"){
-                               echo './Images/image-empty-male.png';
-                            }elseif(($_SESSION['all users']['gender']) === "Female"){
-                                echo './Images/image-empty-female-cartoon.png';
-                            }else{
-                                echo './Images/hijla.jpg';
-                            }
-                    }else{
-                       echo  $_SESSION['all users']['img'];
-                    }
-                    ?>" alt="" class="img-fluid rounded-circle border border-dark border-2"
-                        style="width:200px; height:200px; object-fit: cover;">
+                    <img src="<?php
+                                include_once("./Classes/userAccount.php");
+                                if (empty($_SESSION['all users']['img'])) {
+                                    if (($_SESSION['all users']['gender']) === "Male") {
+                                        echo './Images/image-empty-male.png';
+                                    } elseif (($_SESSION['all users']['gender']) === "Female") {
+                                        echo './Images/image-empty-female-cartoon.png';
+                                    } else {
+                                        echo './Images/hijla.jpg';
+                                    }
+                                } else {
+                                    echo  $_SESSION['all users']['img'];
+                                }
+                                ?>" alt="" class="img-fluid rounded-circle border border-dark border-2" style="width:200px; height:200px; object-fit: cover;">
 
                     <h6>Click to change the image!</h6>
                 </label>
@@ -52,14 +50,14 @@ include_once("./navbar.php");
                 </div>
             </form>
             <script>
-            if (<?php
-                $imgUpdate 
-             ?>) {
-                toastr.success('Image Upload Successfully.');
-                setInterval(() => {
-                    location.href = "./updateProfile.php";
-                }, 2000);
-            }
+                if (<?php
+                    $imgUpdate
+                    ?>) {
+                    toastr.success('Image Upload Successfully.');
+                    setInterval(() => {
+                        location.href = "./updateProfile.php";
+                    }, 2000);
+                }
             </script>
 
         </div>
@@ -85,9 +83,7 @@ include_once("./navbar.php");
 
                     <!-- First name -->
                     <div class="col-6 ps-0 mb-3">
-                        <input type="text" placeholder="First Name" name="SfistName"
-                            class=" form-control form-control-sm <?= isset(userAccount::$error['SfistName'])? "is-invalid" : null ?>"
-                            value="<?= userAccount::$SfistName ?? $_SESSION['all users']['First_Name'] ?? null ?>">
+                        <input type="text" placeholder="First Name" name="SfistName" class=" form-control form-control-sm <?= isset(userAccount::$error['SfistName']) ? "is-invalid" : null ?>" value="<?= userAccount::$SfistName ?? $_SESSION['all users']['First_Name'] ?? null ?>">
                         <div class=" text-danger">
                             <?= userAccount::$error['SfistName'] ?? null ?>
                         </div>
@@ -96,8 +92,7 @@ include_once("./navbar.php");
                     <!-- Surname -->
                     <div class=" col-6 pe-0 mb-3">
                         <input type="text" placeholder="Surname" name="SsurName" class=" form-control form-control-sm
-                                     <?= isset(userAccount::$error['SsurName'])? "is-invalid": null ?>"
-                            value="<?= userAccount::$SsurName ?? $_SESSION['all users']['Surname'] ?? null ?>">
+                                     <?= isset(userAccount::$error['SsurName']) ? "is-invalid" : null ?>" value="<?= userAccount::$SsurName ?? $_SESSION['all users']['Surname'] ?? null ?>">
                         <div class=" text-danger">
                             <?= userAccount::$error['SsurName'] ?? null ?>
                         </div>
@@ -105,9 +100,7 @@ include_once("./navbar.php");
 
                     <!-- email -->
                     <div class=" col-12 p-0 mb-3">
-                        <input type="email" name="Semail_Phn" placeholder="Email address"
-                            class="form-control form-control-sm <?= isset(userAccount::$error['Semail_Phn'])? "is-invalid" : null ?>"
-                            value="<?= userAccount::$Semail_Phn ?? $_SESSION['all users']['email_or_mobile'] ?? null ?>">
+                        <input type="email" name="Semail_Phn" placeholder="Email address" class="form-control form-control-sm <?= isset(userAccount::$error['Semail_Phn']) ? "is-invalid" : null ?>" value="<?= userAccount::$Semail_Phn ?? $_SESSION['all users']['email_or_mobile'] ?? null ?>">
                         <div class="text-danger">
                             <?= userAccount::$error['Semail_Phn'] ?? null ?>
                         </div>
@@ -118,31 +111,24 @@ include_once("./navbar.php");
                         <span>Gender</span>
                     </div>
                     <div class="col-12 p-0 d-flex justify-content-between form-group">
-                        <label for="female"
-                            class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender'])? "is-invalid" : null ?>">
+                        <label for="female" class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender']) ? "is-invalid" : null ?>">
                             <label for="female">Female</label>
-                            <input type="radio" value="Female" name="SGender" class="align-middle" id="female"
-                                <?=  $_SESSION['all users']['gender'] === "Female" ? "checked": null  ?>>
+                            <input type="radio" value="Female" name="SGender" class="align-middle" id="female" <?= $_SESSION['all users']['gender'] === "Female" ? "checked" : null  ?>>
                         </label>
-                        <label for="Male"
-                            class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender'])? "is-invalid" : null  ?>">
+                        <label for="Male" class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender']) ? "is-invalid" : null  ?>">
                             <label for="Male">Male</label>
-                            <input type="radio" id="Male" value="Male" name="SGender" class="align-middle"
-                                <?=  $_SESSION['all users']['gender'] === "Male" ? "checked": null  ?>>
+                            <input type="radio" id="Male" value="Male" name="SGender" class="align-middle" <?= $_SESSION['all users']['gender'] === "Male" ? "checked" : null  ?>>
                         </label>
-                        <label for="Others"
-                            class="align-middle form-control form-control-sm d-flex justify-content-between <?= isset(userAccount::$gndr['SGender'])? "is-invalid" : null  ?>">
+                        <label for="Others" class="align-middle form-control form-control-sm d-flex justify-content-between <?= isset(userAccount::$gndr['SGender']) ? "is-invalid" : null  ?>">
                             <label for="Others">Others </label>
-                            <input type="radio" value="Others" name="SGender" id="Others" class="align-middle"
-                                <?=  $_SESSION['all users']['gender'] === "Others" ? "checked": null  ?>>
+                            <input type="radio" value="Others" name="SGender" id="Others" class="align-middle" <?= $_SESSION['all users']['gender'] === "Others" ? "checked" : null  ?>>
                         </label>
                     </div>
 
                     <!-- submit button -->
                     <div class="p-0">
                         <input type="reset" class="col-2 mx-auto btn btn-sm btn-dark fw-bold shadow-sm my-3">
-                        <input type="submit" name="update123" value="Update"
-                            class="col-3 mx-auto btn btn-sm btn-success fw-bold shadow-sm my-3">
+                        <input type="submit" name="update123" value="Update" class="col-3 mx-auto btn btn-sm btn-success fw-bold shadow-sm my-3">
                     </div>
                 </form>
             </div>
@@ -152,13 +138,13 @@ include_once("./navbar.php");
 </div>
 
 <script>
-const ppimg = document.getElementById("ppimg");
-const imgUploadForm = document.getElementById("imgUploadForm");
-ppimg.addEventListener("change", () => {
-    imgUploadForm.submit();
-})
+    const ppimg = document.getElementById("ppimg");
+    const imgUploadForm = document.getElementById("imgUploadForm");
+    ppimg.addEventListener("change", () => {
+        imgUploadForm.submit();
+    })
 </script>
 
-<?php 
+<?php
 include_once("./footer.php");
 ?>

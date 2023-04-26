@@ -1,13 +1,13 @@
 <?php
 include_once("header.php");
-(isset($_SESSION['all users']))? header("location: ./"): null;
-if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['singup123'])){
-userAccount::validation();
-(isset($_SESSION['all users']))? header("location: ./?success=ture"): null;
-}
-if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
+(isset($_SESSION['all users'])) ? header("location: ./") : null;
+if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['singup123'])) {
     userAccount::validation();
-    (isset($_SESSION['all users']))? header("location: ./?success=ture"): null;
+    (isset($_SESSION['all users'])) ? header("location: ./?success=ture") : null;
+}
+if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])) {
+    userAccount::validation();
+    (isset($_SESSION['all users'])) ? header("location: ./?success=ture") : null;
 }
 ?>
 
@@ -32,8 +32,8 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                 <h3 class="m-0">Sign In</h3>
                 <span class="fw-lighter" style="font-size: 14px;">Login with your correct details.</span>
                 <div class="col-10">
-                    <?=userAccount::$error['Linsert'] ?? null?>
-                    <?= userAccount::$error['Lpinsert'] ?? null?>
+                    <?= userAccount::$error['Linsert'] ?? null ?>
+                    <?= userAccount::$error['Lpinsert'] ?? null ?>
                 </div>
             </div>
             <form action="" method="POST">
@@ -45,10 +45,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- email -->
                         <div class="my-2">
-                            <input type="email"
-                                class="form-control <?= isset(userAccount::$error['Luemail']) ? "is-invalid" : null ?>"
-                                placeholder=" Email address" name="Luemail"
-                                value="<?= userAccount::$Luemail ?? null ?>">
+                            <input type="email" class="form-control <?= isset(userAccount::$error['Luemail']) ? "is-invalid" : null ?>" placeholder=" Email address" name="Luemail" value="<?= userAccount::$Luemail ?? null ?>">
                             <div class="text-danger">
                                 <?= userAccount::$error['Luemail'] ?? null ?>
                             </div>
@@ -57,9 +54,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- password -->
                         <div class="my-3">
-                            <input type="password"
-                                class="form-control <?= isset(userAccount::$error['Lupass']) ? "is-invalid" : null ?>"
-                                placeholder="Password" name="Lupass" value="<?= userAccount::$Lupass ?? null ?>">
+                            <input type="password" class="form-control <?= isset(userAccount::$error['Lupass']) ? "is-invalid" : null ?>" placeholder="Password" name="Lupass" value="<?= userAccount::$Lupass ?? null ?>">
                             <div class="text-danger">
                                 <?= userAccount::$error['Lupass'] ?? null ?>
                             </div>
@@ -72,14 +67,13 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- forget link -->
                         <div class="text-center">
-                            <a href="javascript:void(0)" class="text-center" style="font-size: 12px;"
-                                onclick="btn3ClickHandler()">
+                            <a href="javascript:void(0)" class="text-center" style="font-size: 12px;" onclick="btn3ClickHandler()">
                                 <span>Forgotten password?</span>
                             </a>
                             <script>
-                            function btn3ClickHandler() {
-                                alert("Comming Soon. Working on it!");
-                            }
+                                function btn3ClickHandler() {
+                                    alert("Comming Soon. Working on it!");
+                                }
                             </script>
                         </div>
                     </div>
@@ -98,7 +92,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                 <span class="fw-lighter" style="font-size: 14px;">It's quick and easy.</span>
             </div>
             <div>
-                <?=userAccount::$error['insert'] ?? null?>
+                <?= userAccount::$error['insert'] ?? null ?>
             </div>
             <div>
                 <hr style="border-top:2px solid green;">
@@ -107,9 +101,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- First name -->
                         <div class="col-6 ps-0 mb-3">
-                            <input type="text" placeholder="First Name" name="SfistName"
-                                class=" form-control form-control-sm <?= isset(userAccount::$error['SfistName'])? "is-invalid" : null ?> <?= isset(userAccount::$SfistName)?"is-valid": null ?>"
-                                value="<?= userAccount::$SfistName ?? null ?>">
+                            <input type="text" placeholder="First Name" name="SfistName" class=" form-control form-control-sm <?= isset(userAccount::$error['SfistName']) ? "is-invalid" : null ?> <?= isset(userAccount::$SfistName) ? "is-valid" : null ?>" value="<?= userAccount::$SfistName ?? null ?>">
                             <div class=" text-danger">
                                 <?= userAccount::$error['SfistName'] ?? null ?>
                             </div>
@@ -118,9 +110,8 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                         <!-- Surname -->
                         <div class=" col-6 pe-0 mb-3">
                             <input type="text" placeholder="Surname" name="SsurName" class=" form-control form-control-sm
-                                 <?= isset(userAccount::$error['SsurName'])? "is-invalid": null ?>
-                                 <?= isset(userAccount::$SsurName)?"is-valid": null ?>"
-                                value="<?= userAccount::$SsurName ?? null ?>">
+                                 <?= isset(userAccount::$error['SsurName']) ? "is-invalid" : null ?>
+                                 <?= isset(userAccount::$SsurName) ? "is-valid" : null ?>" value="<?= userAccount::$SsurName ?? null ?>">
                             <div class=" text-danger">
                                 <?= userAccount::$error['SsurName'] ?? null ?>
                             </div>
@@ -128,9 +119,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- email -->
                         <div class=" col-12 p-0 mb-3">
-                            <input type="email" name="Semail_Phn" placeholder="Email address"
-                                class="form-control form-control-sm <?= isset(userAccount::$error['Semail_Phn'])? "is-invalid" : null ?> <?= isset(userAccount::$Semail_Phn)?"is-valid": null ?>"
-                                value="<?= userAccount::$Semail_Phn ?? null ?>">
+                            <input type="email" name="Semail_Phn" placeholder="Email address" class="form-control form-control-sm <?= isset(userAccount::$error['Semail_Phn']) ? "is-invalid" : null ?> <?= isset(userAccount::$Semail_Phn) ? "is-valid" : null ?>" value="<?= userAccount::$Semail_Phn ?? null ?>">
                             <div class="text-danger">
                                 <?= userAccount::$error['Semail_Phn'] ?? null ?>
                             </div>
@@ -138,9 +127,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- password -->
                         <div class="col-12 p-0 mb-3">
-                            <input type="password" name="Spass" placeholder="New password"
-                                class="form-control form-control-sm <?= isset(userAccount::$error['Spass'])? "is-invalid" : null ?> <?= isset(userAccount::$Spass)?"is-valid": null ?>"
-                                value="<?= userAccount::$Spass ?? null ?>">
+                            <input type="password" name="Spass" placeholder="New password" class="form-control form-control-sm <?= isset(userAccount::$error['Spass']) ? "is-invalid" : null ?> <?= isset(userAccount::$Spass) ? "is-valid" : null ?>" value="<?= userAccount::$Spass ?? null ?>">
                             <div class="text-danger">
                                 <?= userAccount::$error['Spass'] ?? null ?>
                             </div>
@@ -148,9 +135,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
 
                         <!-- confirm password -->
                         <div class="col-12 p-0">
-                            <input type="password" name="SCpass" placeholder="Confirm password"
-                                class="form-control form-control-sm <?= isset(userAccount::$error['SCpass'])? "is-invalid" : null ?> <?= isset(userAccount::$SCpass)?"is-valid": null ?>"
-                                value="<?= userAccount::$SCpass ?? null ?>">
+                            <input type="password" name="SCpass" placeholder="Confirm password" class="form-control form-control-sm <?= isset(userAccount::$error['SCpass']) ? "is-invalid" : null ?> <?= isset(userAccount::$SCpass) ? "is-valid" : null ?>" value="<?= userAccount::$SCpass ?? null ?>">
                             <div class="text-danger">
                                 <?= userAccount::$error['SCpass'] ?? null ?>
                             </div>
@@ -161,13 +146,12 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                             <span>Date of birth</span>
                         </div>
                         <div class="col-12 p-0 d-flex justify-content-between form-group">
-                            <select name="Sbirth_day" id=""
-                                class="form-select form-select-sm me-3 <?= isset(userAccount::$error['Sbirth_day'])? "is-invalid" : null  ?>">
+                            <select name="Sbirth_day" id="" class="form-select form-select-sm me-3 <?= isset(userAccount::$error['Sbirth_day']) ? "is-invalid" : null  ?>">
                                 <option value="<?= userAccount::$Sbirth_day ?? null  ?>">
                                     <?= userAccount::$Sbirth_day ?? "-- Date --" ?>
                                 </option>
                                 <?php
-                                    $day = date("d");
+                                $day = date("d");
                                 ?>
                                 <option value="01">01</option>
                                 <option value="02">02</option>
@@ -201,8 +185,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                                 <option value="30">30</option>
                                 <option value="31">31</option>
                             </select>
-                            <select name="Sbirth_month" id=""
-                                class="form-select form-select-sm me-3 <?= isset(userAccount::$error['Sbirth_month'])? "is-invalid" : null  ?>">
+                            <select name="Sbirth_month" id="" class="form-select form-select-sm me-3 <?= isset(userAccount::$error['Sbirth_month']) ? "is-invalid" : null  ?>">
                                 <option value="<?= userAccount::$Sbirth_month ?? null ?>">
                                     <?= userAccount::$Sbirth_month ?? "-- Month --" ?>
                                 </option>
@@ -219,10 +202,9 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                                 <option value="November">Nov</option>
                                 <option value="December">Dec</option>
                             </select>
-                            <select name="Sbirth_year" id=""
-                                class="form-select form-select-sm <?= isset(userAccount::$error['Sbirth_year'])? "is-invalid" : null ?>">
-                                <option value="<?= userAccount::$Sbirth_year?? null ?>">
-                                    <?= isset(userAccount::$Sbirth_year)? userAccount::$Sbirth_year : "-- Year --" ?>
+                            <select name="Sbirth_year" id="" class="form-select form-select-sm <?= isset(userAccount::$error['Sbirth_year']) ? "is-invalid" : null ?>">
+                                <option value="<?= userAccount::$Sbirth_year ?? null ?>">
+                                    <?= isset(userAccount::$Sbirth_year) ? userAccount::$Sbirth_year : "-- Year --" ?>
                                 </option>
                                 <option value="2022">2022</option>
                                 <option value="2021">2021</option>
@@ -349,23 +331,17 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                             <span>Gender</span>
                         </div>
                         <div class="col-12 p-0 d-flex justify-content-between form-group">
-                            <label for="female"
-                                class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender'])? "is-invalid" : null ?>">
+                            <label for="female" class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender']) ? "is-invalid" : null ?>">
                                 <label for="female">Female</label>
-                                <input type="radio" value="Female" name="SGender" class="align-middle" id="female"
-                                    <?= (isset(userAccount::$SGender) && userAccount::$SGender === "Female") ? "checked": null  ?>>
+                                <input type="radio" value="Female" name="SGender" class="align-middle" id="female" <?= (isset(userAccount::$SGender) && userAccount::$SGender === "Female") ? "checked" : null  ?>>
                             </label>
-                            <label for="Male"
-                                class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender'])? "is-invalid" : null  ?>">
+                            <label for="Male" class="align-middle form-control form-control-sm d-flex justify-content-between me-3 <?= isset(userAccount::$gndr['SGender']) ? "is-invalid" : null  ?>">
                                 <label for="Male">Male</label>
-                                <input type="radio" id="Male" value="Male" name="SGender" class="align-middle"
-                                    <?= (isset(userAccount::$SGender) && userAccount::$SGender === "Male") ? "checked": null  ?>>
+                                <input type="radio" id="Male" value="Male" name="SGender" class="align-middle" <?= (isset(userAccount::$SGender) && userAccount::$SGender === "Male") ? "checked" : null  ?>>
                             </label>
-                            <label for="Others"
-                                class="align-middle form-control form-control-sm d-flex justify-content-between <?= isset(userAccount::$gndr['SGender'])? "is-invalid" : null  ?>">
+                            <label for="Others" class="align-middle form-control form-control-sm d-flex justify-content-between <?= isset(userAccount::$gndr['SGender']) ? "is-invalid" : null  ?>">
                                 <label for="Others">Others </label>
-                                <input type="radio" value="Others" name="SGender" id="Others" class="align-middle"
-                                    <?= (isset(userAccount::$SGender) && userAccount::$SGender === "Others") ? "checked": null  ?>>
+                                <input type="radio" value="Others" name="SGender" id="Others" class="align-middle" <?= (isset(userAccount::$SGender) && userAccount::$SGender === "Others") ? "checked" : null  ?>>
                             </label>
                         </div>
                         <div class="text-danger p-0">
@@ -373,8 +349,7 @@ if($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST['signin123'])){
                         </div>
 
                         <!-- sign Up button -->
-                        <input type="submit" name="singup123" value="Sign-Up"
-                            class="col-5 mx-auto btn btn-sm btn-success fw-bold shadow-sm my-3">
+                        <input type="submit" name="singup123" value="Sign-Up" class="col-5 mx-auto btn btn-sm btn-success fw-bold shadow-sm my-3">
                     </div>
 
                 </form>

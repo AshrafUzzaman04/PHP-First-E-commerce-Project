@@ -7,21 +7,21 @@ include_once("header.php");
 ?>
 <div class="topIMG">
     <?php
-include_once("navbar.php");
+    include_once("navbar.php");
 
-// successfull login massage
-if(isset($_GET['success'])){
+    // successfull login massage
+    if (isset($_GET['success'])) {
     ?>
-    <script>
-    toastr.success('Login Successfully.');
-    setTimeout(() => {
-        location.href = "./";
-    }, 1000);
-    </script>
+        <script>
+            toastr.success('Login Successfully.');
+            setTimeout(() => {
+                location.href = "./";
+            }, 1000);
+        </script>
     <?php
-}
-// body end
-?>
+    }
+    // body end
+    ?>
 </div>
 
 <?php
